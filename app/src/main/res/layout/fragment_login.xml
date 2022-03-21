@@ -14,17 +14,8 @@
         android:fontFamily="indigo_daisy"
         android:layout_marginStart="25dp"
         android:layout_marginBottom="10dp"
-        android:layout_above="@id/tv_subtitle"/>
-
-    <TextView
-        android:id="@+id/tv_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="17sp"
-        android:fontFamily="roboto_regular"
-        android:layout_marginStart="25dp"
-        android:layout_marginBottom="50dp"
         android:layout_above="@id/et_email"/>
+
 
     <EditText
         android:id="@+id/et_email"
