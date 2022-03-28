@@ -7,6 +7,10 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.Fragment;
 import androidx.activity.ComponentActivity;
+import androidx.core.content.ContextCompat;
+import android.os.Build;
+import android.Manifest;
+import androidx.core.app.ActivityCompat;
 
 //import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
@@ -85,6 +89,12 @@ public class MainActivity extends AppCompatActivity {
 
         if(!mBadapter.isEnabled()){
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_DENIED) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.BLUETOOTH_CONNECT}, 2);
+                    return;
+                }
+            }
             startActivityForResult(enableIntent, REQUEST_ENABLE_BLUETOOTH);
         }
 
@@ -93,6 +103,12 @@ public class MainActivity extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_DENIED) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.BLUETOOTH_CONNECT}, 2);
+                        return;
+                    }
+                }
                 mBadapter.startDiscovery();
             }
         });
@@ -116,6 +132,12 @@ public class MainActivity extends AppCompatActivity {
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_DENIED) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.BLUETOOTH_CONNECT}, 2);
+                        return;
+                    }
+                }
                 bList.add(device.getName());
                     aAdapter.notifyDataSetChanged();
                 }
@@ -134,6 +156,12 @@ public class MainActivity extends AppCompatActivity {
         paired.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_DENIED) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.BLUETOOTH_CONNECT}, 2);
+                        return;
+                    }
+                }
                 Set<BluetoothDevice> bt = mBadapter.getBondedDevices();
                 String[] strings = new String[bt.size()];
                 int index= 0;
